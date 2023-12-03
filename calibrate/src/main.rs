@@ -2,7 +2,6 @@ use std::collections::HashMap;
 use std::env;
 use std::fs;
 
-
 fn main() {
     let filename = env::args().skip(1).next().unwrap();
     let contents = fs::read_to_string(filename).unwrap();
@@ -25,8 +24,6 @@ fn main() {
 
     println!("{}", calsum);
 }
-
-// RETURNING STRING AS TO RESULT IN CLONED VALUE.
 
 // Return first digit in word
 fn head_digit(line: &str, charmap: &HashMap<String, String>) -> String { 
