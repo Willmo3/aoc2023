@@ -24,7 +24,7 @@ fn main() {
 
     println!("{}", calsum);
 }
-
+    
 // Return first digit in word
 fn head_digit(line: &str, charmap: &HashMap<String, String>) -> String { 
     // I establishes the end bound
