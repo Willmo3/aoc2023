@@ -19,11 +19,6 @@ fn main() {
     let calsum: u32 = contents.split("\n").fold(0, | sum, line | {
         let firstdigit = head_digit(line, &charmap);
         let lastdigit = tail_digit(line, &charmap);
-
-        println!("{}", line);
-        println!("{}", firstdigit);
-        println!("{}", lastdigit);
-
         let numstr = format!("{}{}", firstdigit, lastdigit);
         sum + numstr.parse::<u32>().unwrap()
     });
