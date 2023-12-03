@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use std::fs;
 use std::env;
 
@@ -18,17 +19,31 @@ fn main() {
         let id: &str = id.split(" ").skip(1).next().unwrap();
         let id: u32 = id.parse().unwrap();
 
-        let draws = data.split(";");
-        for draw in draws {
-            analyze_draw(MAX_R, MAX_G, MAX_B, draw)
+        let mut draws = data.split(";");
+        if draws.all(| draw | analyze_draw(MAX_R, MAX_G, MAX_B, draw)) {
+            sum + id
+        } else {
+            sum
         }
-        sum
     });
+
+    println!("{}", validgames);
 }
 
-// Analyze the contents of a draw to see if they meet hte containts.
-fn analyze_draw(max_r: u32, max_g: u32, max_b: u32, draw: &str) {
-    println!("{}", draw);
+// Analyze the contents of a draw to see if they meet the constraints.
+fn analyze_draw(max_r: u32, max_g: u32, max_b: u32, draw: &str) -> bool {
+    let mut color_maxes = HashMap::new();
+    color_maxes.insert("red", max_r);
+    color_maxes.insert("green", max_g);
+    color_maxes.insert("blue", max_b);
+
+    draw.split(",").all(| item | {
+        // Ignore leading space.
+        let mut data_tup = item.split(" ").skip(1);
+        let (num, color) = (data_tup.next().unwrap(), data_tup.next().unwrap());
+        let num: u32 = num.parse().unwrap();
+        num <= color_maxes.get(color).unwrap().clone()
+    })
 }
 
 // Pseudocode:
